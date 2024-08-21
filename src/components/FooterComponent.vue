@@ -4,7 +4,7 @@
         <div class="content has-text-centered">
             <p>
             <strong>CSV-RDF-Mapper</strong> by <a href="https://www.ulb.tu-darmstadt.de/">ULB Darmstadt</a>. 
-            The <i class="fab fa-github"></i><a href="https://github.com/winroger/csv-rdf-mapper">source code</a> is licensed
+            The <i class="fab fa-github"></i><a href="https://github.com/ULB-Darmstadt/csv-rdf-mapper">source code</a> is licensed
             <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
             </p>
         </div>

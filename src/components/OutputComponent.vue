@@ -1,16 +1,16 @@
 <template>
-  <h4 class="title is-4">3. Generate and Display RDF-Graph</h4>
-  <p class="content">Once you are done with adjusting the mapping between your shapegraph and nodegraph, you can
-    generate your RDF-Graph by clicking the button below.
-  </p>
+  <div>
+    <h4 class="title is-4">3. Generate and Display RDF-Graph</h4>
+    <p class="content">Once you are done with adjusting the mapping between your shapegraph and nodegraph, you can
+      generate your RDF-Graph by clicking the button below.
+    </p>
 
-  <button class="button is-dark content" @click="generateRDF()">Create Datagraph</button>
-    <div v-if="rdfGraphGenerated" class="">
-      <div class="content">
-        <button class="copy-btn" @click="copyToClipboard()">{{ copyButtonText }}</button>
-        <pre is-family-code>{{ rdfGraph }}</pre>
-      </div>
+    <button class="button is-dark content" @click="generateRDF()">Create Datagraph</button>
+    <div v-if="rdfGraphGenerated" class="content">
+      <button class="copy-btn" @click="copyToClipboard()">{{ copyButtonText }}</button>
+      <pre is-family-code>{{ rdfGraph }}</pre>
     </div>
+  </div>
 </template>
 
 <script>
@@ -82,11 +82,17 @@ import { InputData } from '@/inputdata';
                   newTripleStore.add(subject, RDF_PREDICATE_TYPE, shape.nodeId)
                   if(prop.node) {
                     const targetNodesRaw = row[header_index]
-                    if (targetNodesRaw) {
-                      targetNodesRaw.forEach(targetNode => {
-                      newTripleStore.add(subject, prop.path, namedNode(prop.node.value + targetNode))
-                      })
+                    // Try splitting the string, if splitting fails, put the original string into a list
+                    let targetNodesList = [];
+
+                    try {
+                      targetNodesList = targetNodesRaw.split(",");
+                    } catch (err) {
+                      targetNodesList = [targetNodesRaw];
                     }
+                    targetNodesList.forEach(targetNode => {
+                      newTripleStore.add(subject, prop.path, namedNode(prop.node.value + targetNode))
+                    })
                   }
                   else {
                     newTripleStore.add(subject, prop.path, literal(row[header_index], prop.datatype))
